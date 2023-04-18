@@ -38,6 +38,7 @@ public class Main {
                     break;
 
                 case 2:
+                    System.out.println("hi");
                     controller.arrivalOfpassengers();
                     objPassengerList.save();
                     break;
