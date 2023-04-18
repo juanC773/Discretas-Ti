@@ -18,14 +18,16 @@ public class Main {
 
         Scanner lector = new Scanner(System.in);
 
+        int counter=1;
         while(true){
             System.out.println(
                     """
                             
-                            Welcome To The Airline
-                            1. Mostrar
-                            2. A passenger arrives
-                            3. Salir
+                            Welcome To The Airline.
+                            1. Show passengers expected.
+                            2. A passenger arrives.
+                            3. Show the way passengers are going to enter due to their priority.
+                            4. Salir
                             """
             );
             int option = Integer.parseInt(lector.nextLine());
@@ -38,12 +40,21 @@ public class Main {
                     break;
 
                 case 2:
-                    System.out.println("hi");
+
                     controller.arrivalOfpassengers();
                     objPassengerList.save();
+
+                    if(counter<=objPassengerList.getPassengerList().size()){
+                        System.out.println("have arrived: "+counter+"/"+objPassengerList.getPassengerList().size()+" passengers");
+                        counter++;
+                    }
+
                     break;
 
                 case 3:
+                    controller.showHeap();
+                    break;
+                case 4:
                     System.exit(0);
                     break;
             }

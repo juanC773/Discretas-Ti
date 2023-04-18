@@ -25,6 +25,11 @@ public class AirLineController {
 
 
     AirPlane airPlane=new AirPlane();
+    Heap heap=new Heap(32);
+
+
+
+
 
 
 
@@ -33,14 +38,50 @@ public class AirLineController {
 
         Passenger passenger=randomPassenger();
         if(passenger==null){
-            System.out.println("Ya han llegado todos los pasajeros");
+            System.out.println("All the passengers have arrived");
         }else {
 
-
+            calculatePriority(passenger);
             System.out.println("the passenger will give his identification:");
             System.out.println("Hi, mi name is: " + passenger.getName() + " " + passenger.getLastName() + ", my id is: " + passenger.getNatID());
 
+
+
+            heap.add(passenger);
+
+
+
+
+
+            }
+
+
         }
+
+
+    public void showHeap() {
+
+        System.out.println("Pasajeros en orden de prioridad:");
+
+
+        boolean confirm=true;
+
+        while (heap.size() > 0 & confirm ) {
+
+            Passenger nextPassenger = (Passenger) heap.poll();
+
+            if(nextPassenger==null){
+                 System.out.println("Es toda la lista");
+                 confirm=false;
+            } else if (nextPassenger!=null) {
+                System.out.println(nextPassenger.getName() + " - Prioridad: " + nextPassenger.getPriority());
+
+            }
+
+
+        }
+
+
 
     }
 
@@ -82,12 +123,7 @@ public class AirLineController {
 
         int quantityToPriority=0;
 
-        //si es primera clase
-        //Las millas
-        //La condicion especial
-        //Llegada de primero
-        //numero de asiento
-        //ventana o pasillo
+        //si es primera clase, Las millas, La condicion especial, Llegada de primero, numero de asiento, si su asiento es ventana o pasillo
 
         //primera Clase
         if (passenger.getPassengerCategory()==PassengerCategory.FirstClass){
@@ -96,10 +132,8 @@ public class AirLineController {
 
 
         //Miles
-        int milesCalculated=calculateMiles(passenger.getMiles());
-        System.out.println("las millas del metodo son: "+milesCalculated);
+        quantityToPriority+=calculateMiles(passenger.getMiles());
 
-        quantityToPriority+=milesCalculated;
 
 
         //preñada primero, discapacitado, viejito
@@ -160,7 +194,7 @@ public class AirLineController {
             weighted=150;
 
         }else if(miles>1000 & miles<=1500){
-             weighted=200;
+            weighted=200;
 
         }else if(miles>1500 || miles<=2000){
             weighted=250;

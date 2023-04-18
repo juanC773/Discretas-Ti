@@ -11,13 +11,13 @@ public class Passenger implements  Comparable<Passenger>{
 
     private int miles;
 
-   private PassengerCategory passengerCategory;
+    private PassengerCategory passengerCategory;
 
-   private SpecialCase specialCase;
+    private SpecialCase specialCase;
 
-   private Seat seat;
+    private Seat seat;
 
-   private int priority;
+    private int priority;
 
     public int getPriority() {
         return priority;
@@ -108,6 +108,9 @@ public class Passenger implements  Comparable<Passenger>{
 
     @Override
     public int compareTo(Passenger o) {
-        return 0;
+
+        int criterial=this.getPriority()-o.priority;
+
+        return criterial;
     }
 }
