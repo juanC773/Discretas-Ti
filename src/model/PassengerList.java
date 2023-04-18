@@ -71,7 +71,7 @@ import java.util.Arrays;
 
         public void show() {
             for (Passenger s : passengers) {
-                System.out.println("Passenger name: "+s.getName()+", Last name: "+s.getLastName()+", ID: "+s.getNatID()+", Category Passenger: "+s.getPassengerCategory()+ ", Special case: "+s.getSpecialCase());
+                System.out.println("Passenger name: "+s.getName()+", Last name: "+s.getLastName()+", ID: "+s.getNatID()+", Category Passenger: "+s.getPassengerCategory()+ ", Special case: "+s.getSpecialCase()+", Number of seat: "+s.getSeat().getNumberOfSeat());
             }
         }
     }

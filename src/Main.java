@@ -1,10 +1,7 @@
 import java.io.IOException;
 import java.util.Scanner;
 
-import model.Passenger;
-import model.PassengerCategory;
-import model.PassengerList;
-import model.SpecialCase;
+import model.*;
 
 public class Main {
 
@@ -17,6 +14,7 @@ public class Main {
 
 
         objPassengerList.load();
+        AirLineController controller=new AirLineController();
 
         Scanner lector = new Scanner(System.in);
 
@@ -26,7 +24,8 @@ public class Main {
                             
                             Welcome To The Airline
                             1. Mostrar
-                            2. Salir
+                            2. A passenger arrives
+                            3. Salir
                             """
             );
             int option = Integer.parseInt(lector.nextLine());
@@ -37,7 +36,13 @@ public class Main {
 
                     objPassengerList.show();
                     break;
+
                 case 2:
+                    controller.arrivalOfpassengers();
+                    objPassengerList.save();
+                    break;
+
+                case 3:
                     System.exit(0);
                     break;
             }

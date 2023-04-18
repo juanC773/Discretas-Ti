@@ -1,6 +1,6 @@
 package model;
 
-public class Passenger {
+public class Passenger implements  Comparable<Passenger>{
 
     private String name;
     private String lastName;
@@ -15,8 +15,29 @@ public class Passenger {
 
    private SpecialCase specialCase;
 
+   private Seat seat;
 
-    public Passenger(String name, String lastName, String natID, int age, int miles, PassengerCategory passengerCategory, SpecialCase specialCase) {
+   private int priority;
+
+    public int getPriority() {
+        return priority;
+    }
+
+    public void setPriority(int priority) {
+        this.priority = priority;
+    }
+
+    public Seat getSeat() {
+        return seat;
+    }
+
+    public void setSeat(Seat seat) {
+        this.seat = seat;
+    }
+
+
+
+    public Passenger(String name, String lastName, String natID, int age, int miles, PassengerCategory passengerCategory, SpecialCase specialCase, Seat seat) {
         this.name = name;
         this.lastName = lastName;
         this.natID = natID;
@@ -24,6 +45,7 @@ public class Passenger {
         this.miles = miles;
         this.passengerCategory=passengerCategory;
         this.specialCase=specialCase;
+        this.seat=seat;
 
     }
 
@@ -82,5 +104,10 @@ public class Passenger {
 
     public void setMiles(int miles) {
         this.miles = miles;
+    }
+
+    @Override
+    public int compareTo(Passenger o) {
+        return 0;
     }
 }
