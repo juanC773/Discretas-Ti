@@ -19,36 +19,48 @@ public class AirLineController {
     }
 
 
+
     //Cuando lleguen, los 10 primeros reciben un poco de prioridad por llegar primero
 
 
 
 
     AirPlane airPlane=new AirPlane();
-    Heap heap=new Heap(32);
+    Heap heap=new Heap(airPlane.getSeats().size());
+    Heap heapToEnterAirplane=new Heap(heap.size());
 
 
 
 
 
 
-
+    int counterArrival=1;
     public void arrivalOfpassengers() throws IOException {
+
 
 
         Passenger passenger=randomPassenger();
         if(passenger==null){
-            System.out.println("All the passengers have arrived");
+            System.out.println("All the passengers have arrived, ready to board");
         }else {
 
             calculatePriority(passenger);
             System.out.println("the passenger will give his identification:");
             System.out.println("Hi, mi name is: " + passenger.getName() + " " + passenger.getLastName() + ", my id is: " + passenger.getNatID());
 
+            //Esto indica que solo se les beneficiara a los 10 primeros pasajeros en llegar
+            if(counterArrival<=10){
+                passenger.setPriority(passenger.getPriority()+50);
+            }
 
+            counterArrival++;
 
             heap.add(passenger);
 
+            //Le agrega a un nuevo monticulo para el ingreso del avion
+            heapToEnterAirplane.add(passenger);
+
+
 
 
 
@@ -59,31 +71,74 @@ public class AirLineController {
         }
 
 
-    public void showHeap() {
+        int planeTicketNumber=1;
+    public void showHeap(int allPassengers) {
 
-        System.out.println("Pasajeros en orden de prioridad:");
 
 
-        boolean confirm=true;
+        allPassengers--;
 
-        while (heap.size() > 0 & confirm ) {
+        if(allPassengers<32){
 
-            Passenger nextPassenger = (Passenger) heap.poll();
+            int totalPassengers=heap.size()-allPassengers;
+            System.out.println("You can't board yet, not all the passengers have arrived, missing: "+totalPassengers+" passengers");
 
-            if(nextPassenger==null){
-                 System.out.println("Es toda la lista");
-                 confirm=false;
-            } else if (nextPassenger!=null) {
-                System.out.println(nextPassenger.getName() + " - Prioridad: " + nextPassenger.getPriority());
+        }else {
+
+            System.out.println("Passengers in order of priority:");
+
+
+            boolean confirm=true;
+
+            while (heap.size() > 0 & confirm ) {
+
+                Passenger nextPassenger = (Passenger) heap.poll();
+
+
+                if(nextPassenger==null){
+                    System.out.println("It's the whole list");
+                    confirm=false;
+                } else if (nextPassenger!=null) {
+                    System.out.println("The passenger: "+nextPassenger.getName() +", enter of number: "+planeTicketNumber+ " - Priority: " + nextPassenger.getPriority());
+                    planeTicketNumber++;
+
+                }
+
 
             }
 
-
         }
+
+
 
 
 
     }
+
+
+    public void getPeopleOnthePlane(int allPassengers) {
+
+        allPassengers--;
+
+        if (allPassengers  >= 32) {
+            airPlane.entranceOfPeopleToThePlane(heapToEnterAirplane);
+
+            for (int i = 0; i < airPlane.getSeats().size(); i++) {
+
+                if (airPlane.getSeats().get(i).getPassenger() != null) {
+                    System.out.println("The seat number is: " + airPlane.getSeats().get(i).getNumberOfSeat() + ", the name of the passenger is: " + airPlane.getSeats().get(i).getPassenger().getName() + " According to your ticket, your seat is:" + airPlane.getSeats().get(i).getPassenger().getSeat().getNumberOfSeat());
+                }
+            }
+
+            }else{
+                int totalPassengers=heap.size()-allPassengers;
+                System.out.println("You can't board yet, not all the passengers have arrived, missing: "+totalPassengers+" passengers");
+            }
+        }
+
+
+
+
 
     public Passenger randomPassenger() throws IOException {
 
@@ -106,16 +161,8 @@ public class AirLineController {
 
             return null;
         }
-
-
-
-
-
-
-
-
-
     }
+
 
 
 

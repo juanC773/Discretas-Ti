@@ -2,6 +2,7 @@ package model;
 
 import java.util.ArrayList;
 
+
 public class AirPlane {
 
 
@@ -10,7 +11,27 @@ public class AirPlane {
 
 
 
+    public void entranceOfPeopleToThePlane(Heap heap){
 
+
+
+
+        boolean confirm=true;
+
+        while (heap.size() > 0 & confirm ) {
+
+            Passenger passenger = (Passenger) heap.poll();
+
+             if (passenger!=null) {
+
+                seats.get(passenger.getSeat().getNumberOfSeat()-1).setPassenger(passenger);
+            }else {
+                 confirm=false;
+             }
+
+
+        }
+    }
 
 
 

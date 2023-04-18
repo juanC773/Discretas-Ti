@@ -8,6 +8,15 @@ public class Seat {
 
     private int numberOfSeat;
 
+    private Passenger passenger;
+
+    public Passenger getPassenger() {
+        return passenger;
+    }
+
+    public void setPassenger(Passenger passenger) {
+        this.passenger = passenger;
+    }
 
     public Seat(int seat, int numberOfSeat) {
         this.seat = seat;

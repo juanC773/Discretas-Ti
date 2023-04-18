@@ -18,7 +18,7 @@ public class Main {
 
         Scanner lector = new Scanner(System.in);
 
-        int counter=1;
+        int passengersToMoment=1;
         while(true){
             System.out.println(
                     """
@@ -27,7 +27,8 @@ public class Main {
                             1. Show passengers expected.
                             2. A passenger arrives.
                             3. Show the way passengers are going to enter due to their priority.
-                            4. Salir
+                            4. Subir a la gente al avion
+                            5. Salir
                             """
             );
             int option = Integer.parseInt(lector.nextLine());
@@ -44,17 +45,21 @@ public class Main {
                     controller.arrivalOfpassengers();
                     objPassengerList.save();
 
-                    if(counter<=objPassengerList.getPassengerList().size()){
-                        System.out.println("have arrived: "+counter+"/"+objPassengerList.getPassengerList().size()+" passengers");
-                        counter++;
+                    if(passengersToMoment<=objPassengerList.getPassengerList().size()){
+                        System.out.println("have arrived: "+passengersToMoment+"/"+objPassengerList.getPassengerList().size()+" passengers");
+                        passengersToMoment++;
                     }
 
                     break;
 
                 case 3:
-                    controller.showHeap();
+                    controller.showHeap(passengersToMoment);
                     break;
+
                 case 4:
+                    controller.getPeopleOnthePlane(passengersToMoment);
+                    break;
+                case 5:
                     System.exit(0);
                     break;
             }
