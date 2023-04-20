@@ -1,4 +1,5 @@
 package model;
+import java.util.ArrayList;
 import java.util.Random;
 import java.io.IOException;
 
@@ -6,20 +7,26 @@ public class AirLineController {
 
 
     private PassengerList passengerList;
+    private Hash passengerHash;
 
 
 
     public AirLineController() {
         passengerList = new PassengerList();
+        passengerHash = new Hash();
+        hashLoad();
         try {
             passengerList.load();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-
-
-
+    private void hashLoad(){
+        ArrayList<Passenger> list = passengerList.getPassengerList();
+        for(Passenger p:list){
+            passengerHash.insert(p);
+        }
+    }
     public void airPlaneStructure(){
 
         System.out.println(
@@ -48,9 +55,6 @@ public class AirLineController {
 
     //Cuando lleguen, los 10 primeros reciben un poco de prioridad por llegar primero
 
-
-
-
     AirPlane airPlane=new AirPlane();
     Heap heap=new Heap(airPlane.getSeats().size());
     Heap heapToEnterAirplane=new Heap(heap.size());
@@ -63,13 +67,10 @@ public class AirLineController {
     int counterArrival=1;
     public void arrivalOfpassengers() throws IOException {
 
-
-
         Passenger passenger=randomPassenger();
         if(passenger==null){
             System.out.println("All the passengers have arrived, ready to board!");
         }else {
-
             calculatePriority(passenger);
             System.out.println("the passenger will give his identification:");
             System.out.println("Hi, mi name is: " + passenger.getName() + " " + passenger.getLastName() + ", my id is: " + passenger.getNatID());
@@ -167,13 +168,7 @@ public class AirLineController {
 
     public Passenger randomPassenger() throws IOException {
 
-
-
         Random random = new Random();
-
-
-
-
         if(passengerList.getPassengerList().size()>0){
 
             int numeroAleatorio = random.nextInt(passengerList.getPassengerList().size());

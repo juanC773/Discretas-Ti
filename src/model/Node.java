@@ -1,10 +1,6 @@
 package model;
 public class Node<T> {
-
-
     private T key;
-
-
     private Node<T> previous;
     private Node<T> next;
 
@@ -35,6 +31,19 @@ public class Node<T> {
 
     public void setPrevious(Node<T> previous) {
         this.previous = previous;
+    }
+
+    public void add(Node<T> e){
+        e.setNext(this);
+    }
+    public int size(){
+        Node<T> current = this;
+        int cont = 1;
+        while(current.getNext()!=null){
+            cont++;
+            current = current.getNext();
+        }
+        return cont;
     }
 
 

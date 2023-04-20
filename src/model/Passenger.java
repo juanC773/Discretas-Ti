@@ -48,6 +48,7 @@ public class Passenger implements  Comparable<Passenger>{
         this.seat=seat;
 
     }
+    public String getNatId(){return natID;}
 
 
     public PassengerCategory getPassengerCategory() {
