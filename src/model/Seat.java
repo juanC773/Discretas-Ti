@@ -4,7 +4,7 @@ public class Seat {
 
 
     //seat==1 es ventana, int==2 es pasillo
-    private int seat;
+    private int typeOfseat;
 
     private int numberOfSeat;
 
@@ -19,16 +19,16 @@ public class Seat {
     }
 
     public Seat(int seat, int numberOfSeat) {
-        this.seat = seat;
+        this.typeOfseat = seat;
         this.numberOfSeat = numberOfSeat;
     }
 
-    public int getSeat() {
-        return seat;
+    public int getTypeOfseat() {
+        return typeOfseat;
     }
 
-    public void setSeat(int seat) {
-        this.seat = seat;
+    public void setTypeOfseat(int typeOfseat) {
+        this.typeOfseat = typeOfseat;
     }
 
     public int getNumberOfSeat() {
