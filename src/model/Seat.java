@@ -1,12 +1,31 @@
 package model;
 
-public class Seat {
+public class Seat implements Comparable<Seat>{
 
 
-    //seat==1 es ventana, int==2 es pasillo
+    //seat==1 es ventana, int==2 es mitad, int 3=pasillo
     private int typeOfseat;
 
     private int numberOfSeat;
+
+    private int numberOfRow;
+
+    private int priorityToGetOut;
+
+    public int getNumberOfRow() {
+        return numberOfRow;
+    }
+
+
+    public Seat(int typeOfseat, int numberOfSeat, int numberOfRow) {
+        this.typeOfseat = typeOfseat;
+        this.numberOfSeat = numberOfSeat;
+        this.numberOfRow = numberOfRow;
+    }
+
+    public void setNumberOfRow(int numberOfRow) {
+        this.numberOfRow = numberOfRow;
+    }
 
     private Passenger passenger;
 
@@ -18,10 +37,7 @@ public class Seat {
         this.passenger = passenger;
     }
 
-    public Seat(int seat, int numberOfSeat) {
-        this.typeOfseat = seat;
-        this.numberOfSeat = numberOfSeat;
-    }
+
 
     public int getTypeOfseat() {
         return typeOfseat;
@@ -37,5 +53,21 @@ public class Seat {
 
     public void setNumberOfSeat(int numberOfSeat) {
         this.numberOfSeat = numberOfSeat;
+    }
+
+    public int getPriorityToGetOut() {
+        return priorityToGetOut;
+    }
+
+    public void setPriorityToGetOut(int priorityToGetOut) {
+        this.priorityToGetOut = priorityToGetOut;
+    }
+
+    @Override
+    public int compareTo(Seat o) {
+
+        int criterial=this.priorityToGetOut-o.priorityToGetOut;
+
+        return criterial;
     }
 }

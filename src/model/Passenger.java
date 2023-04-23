@@ -1,4 +1,5 @@
 package model;
+import model.enums.*;
 
 public class Passenger implements  Comparable<Passenger>{
 

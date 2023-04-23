@@ -1,4 +1,9 @@
 package model;
+import dataStuctures.Heap;
+import dataStuctures.Queue;
+import model.enums.PassengerCategory;
+import model.enums.SpecialCase;
+
 import java.util.Random;
 import java.io.IOException;
 
@@ -28,32 +33,34 @@ public class AirLineController {
                 """
                                 
                              
-                                      aisle         [Exit                        
-                        |             ''''                               
-              row:1     |     [1] [2] '''' [3]  [4]   | 
-              row:2     |     [5] [6] '''' [7]  [8]   |
-              row:3     |    [9] [10] '''' [11] [12]  |
-              row:4     |   [13] [14] '''' [15] [16]  |
-              row:5     |   [17] [18] '''' [19] [20]  |
-              row:6     |   [21] [22] '''' [23] [24]  |
-              row:7     |   [25] [26] '''' [27] [28]  | } First Class
-              row:8     |   [29] [30] '''' [31] [32]  | } First Class
-                        |                             |
-                        |               ⬇             |  
-                        |             cockpit         |
+                                        aisle         [Exit                        
+                        |               ''''               |       SON 12 DE PRIMERA CLASE        
+              row:1     |   [1] [2] [3] '''' [4] [5] [6]   |       16 v, P, M
+              row:2     |   [7] [8] [9] '''' [10][11][12]  |
+              row:3     |  [13][14][15] '''' [16][17][18]  |
+              row:4     |  [19][20][21] '''' [22][23][24]  |
+              row:5     |  [25][26][27] '''' [28][29][30]  |
+              row:6     |  [31][32][33] '''' [34][35][36]  |
+              row:7     |  [37][38][39] '''' [40][41][42]  | } First Class
+              row:8     |  [43][44][45] '''' [46][47][48]  | } First Class
+                        |                                  |
+                        |               ⬇                  |  
+                        |             cockpit              |
                         """
         );
 
     }
-
-    //Cuando lleguen, los 10 primeros reciben un poco de prioridad por llegar primero
 
 
 
 
     AirPlane airPlane=new AirPlane();
     Heap heap=new Heap(airPlane.getSeats().size());
-    Heap heapToEnterAirplane=new Heap(heap.size());
+    Heap heapToSeeInsideTheAirplane=new Heap(heap.size());
+
+    Queue queueToEntry=new Queue();
+
+    Queue queueToSeeInsideTheAirplane=new Queue();
 
 
 
@@ -66,26 +73,48 @@ public class AirLineController {
 
 
         Passenger passenger=randomPassenger();
+
         if(passenger==null){
             System.out.println("All the passengers have arrived, ready to board!");
-        }else {
 
-            calculatePriority(passenger);
+        }else{
+
+            //Envia a calcular las prioridades solo de los pasajeros de primera clase
+            if((passenger.getPassengerCategory()==PassengerCategory.FirstClass)){
+                calculatePriority(passenger);
+                heap.add(passenger);
+
+
+                //Le agrega a un nuevo monticulo para ver a las personas dentro del avion
+                heapToSeeInsideTheAirplane.add(passenger);
+
+            }else {
+
+                //agrega a la cola segun la llegada
+                queueToEntry.enqueue(passenger);
+
+                //Agrega a otra queue para ver a las personas dentro del avion
+                queueToSeeInsideTheAirplane.enqueue(passenger);
+
+
+
+            }
+
+
             System.out.println("the passenger will give his identification:");
             System.out.println("Hi, mi name is: " + passenger.getName() + " " + passenger.getLastName() + ", my id is: " + passenger.getNatID());
 
-            //Esto indica que solo se les beneficiara a los 10 primeros pasajeros en llegar
+            //Esto indica que solo se les dara un poco mas de prioridad a  los 10 primeros pasajeros en llegar
             if(counterArrival<=10){
                 System.out.println("\n(The passenger has received more priority for arriving early)");
-                passenger.setPriority(passenger.getPriority()+50);
+                passenger.setPriority(passenger.getPriority()+100);
             }
 
             counterArrival++;
 
-            heap.add(passenger);
 
-            //Le agrega a un nuevo monticulo para el ingreso del avion
-            heapToEnterAirplane.add(passenger);
+
+
 
 
 
@@ -99,13 +128,13 @@ public class AirLineController {
 
 
         int planeTicketNumber=1;
-    public void showHeap(int allPassengers) {
+    public void showEntry(int allPassengers) {
 
 
 
         allPassengers--;
 
-        if(allPassengers<32){
+        if(allPassengers<airPlane.getSeats().size()){
 
             int totalPassengers=heap.size()-allPassengers;
             System.out.println("You can't board yet, not all the passengers have arrived, missing: "+totalPassengers+" passengers");
@@ -114,29 +143,35 @@ public class AirLineController {
 
             System.out.println("Passengers in order of priority:\n");
 
+            boolean confirm = true;
 
-            boolean confirm=true;
+            while (heap.size() > 0 & confirm) {
 
-            while (heap.size() > 0 & confirm ) {
+                Passenger passenger = (Passenger) heap.poll();
+                if (passenger == null) {
 
-                Passenger nextPassenger = (Passenger) heap.poll();
+                    System.out.println("All first-class passengers, organized by priority, have gone up.\n");
+                    confirm = false;
+                } else {
 
-
-                if(nextPassenger==null){
-                    System.out.println("All the passengers have boarded the plane.");
-                    confirm=false;
-                } else if (nextPassenger!=null) {
-                    System.out.println("The passenger: "+nextPassenger.getName() +", enter of number: "+planeTicketNumber+ " - Priority: " + nextPassenger.getPriority()+"\n---------");
+                    System.out.println("Name: " + passenger.getName() +" Last name: "+passenger.getLastName() +" --Priority: " + passenger.getPriority() + " --Enter of number: " + planeTicketNumber + "\n---------");
                     planeTicketNumber++;
-
                 }
 
 
             }
 
+            while (!queueToEntry.isEmpty()) {
+
+                Passenger passenger = (Passenger) queueToEntry.dequeue();
+                System.out.println("Name: "+passenger.getName()+" Last Name: "+passenger.getLastName()+" --Enter of number: "+planeTicketNumber+"\n---------");
+                planeTicketNumber++;
+
+            }
+            System.out.println("All passengers have boarded the plane");
+
+
         }
-
-
 
 
 
@@ -147,12 +182,13 @@ public class AirLineController {
 
             //Acomoda a los pasajeros en sus respectivas sillas luego de entrar por orden de prioridad
 
-            airPlane.entranceOfPeopleToThePlane(heapToEnterAirplane);
+            airPlane.entranceOfPeopleToThePlane(heapToSeeInsideTheAirplane,queueToSeeInsideTheAirplane);
 
-            System.out.println("After having entered with their due priority, they have been located in their respective seats: \n");
+            System.out.println("After having entered with their due priority and order of arrival, they have been located in their respective seats: \n");
 
             for (int i = 0; i < airPlane.getSeats().size(); i++) {
 
+                //Recorre cada puesto despues de que las personas se han subido para verificar que esten en sus respectivas sillas
                 if (airPlane.getSeats().get(i).getPassenger() != null) {
                     System.out.println("The seat number is: " + airPlane.getSeats().get(i).getNumberOfSeat() + ", the name of the passenger is: " + airPlane.getSeats().get(i).getPassenger().getName() + " According to his ticket, your seat is:" + airPlane.getSeats().get(i).getPassenger().getSeat().getNumberOfSeat()+"\n ------------");
                 }
@@ -198,7 +234,7 @@ public class AirLineController {
         //si es primera clase, Las millas, La condicion especial, Llegada de primero, numero de asiento, si su asiento es ventana o pasillo
 
         //primera Clase
-        if (passenger.getPassengerCategory()==PassengerCategory.FirstClass){
+        if (passenger.getPassengerCategory()== PassengerCategory.FirstClass){
             quantityToPriority+=1000;
         }
 
@@ -209,7 +245,7 @@ public class AirLineController {
 
 
         //preñada primero, discapacitado, viejito
-        if(passenger.getSpecialCase()==SpecialCase.Pregnancy){
+        if(passenger.getSpecialCase()== SpecialCase.Pregnancy){
             quantityToPriority+=500;
 
         } else if (passenger.getSpecialCase()==SpecialCase.Disability){

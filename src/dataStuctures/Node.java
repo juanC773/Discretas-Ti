@@ -1,4 +1,5 @@
-package model;
+package dataStuctures;
+
 public class Node<T> {
 
 

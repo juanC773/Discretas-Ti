@@ -1,8 +1,13 @@
-package model;
+package dataStuctures;
+
+
+
+import exceptions.dataStructure.HeapIsFullException;
+import exceptions.dataStructure.UsePollWithoutElementsException;
 
 import java.util.Objects;
 
-public class Heap<T extends Comparable<T>> {
+public class Heap<T extends Comparable<T>> implements HeapInterface<T>{
     private T[] heapArray;
     private int heapSize;
 
@@ -11,9 +16,9 @@ public class Heap<T extends Comparable<T>> {
         heapSize = 0;
     }
 
-    public void add(T value) {
+    public void add(T value) throws HeapIsFullException {
         if (heapSize == heapArray.length) {
-            throw new IllegalStateException("Heap is full");
+            throw new HeapIsFullException();
         }
 
         heapArray[heapSize] = value;
@@ -23,7 +28,7 @@ public class Heap<T extends Comparable<T>> {
 
     public T poll() {
         if (heapSize == 0) {
-            return null;
+            throw new UsePollWithoutElementsException();
         }
 
         T rootValue = heapArray[0];
@@ -75,6 +80,7 @@ public class Heap<T extends Comparable<T>> {
 
 
 }
+
 
 
 

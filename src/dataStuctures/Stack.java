@@ -1,11 +1,8 @@
+package dataStuctures;
 
-package model;
+import dataStuctures.Node;
 
-
-
-
-
-public class Stack<T> {
+public class Stack<T> implements StackInterface<T>{
 
 
     private Node<T> node;
@@ -75,6 +72,7 @@ public class Stack<T> {
 
 
 }
+
 
 
 
