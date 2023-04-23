@@ -9,8 +9,10 @@ public class Stack<T> implements StackInterface<T>{
     private Node<T> leader;
 
 
-
-
+    /**
+     * name: peek
+     * @return return the first in the stack
+     */
     public Node peek() {
 
         if(leader==null){
@@ -23,7 +25,11 @@ public class Stack<T> implements StackInterface<T>{
     }
 
 
-
+    /**
+     * name: push
+     * add an element in the stack
+     * @param key value of the item
+     */
     public void push(T key) {
 
         if(isEmpty()){
@@ -40,7 +46,10 @@ public class Stack<T> implements StackInterface<T>{
 
     }
 
-
+    /**
+     * name:pop
+     * @return return the first in the stack and delete the item
+     */
     public Node<T> pop() {
 
         Node<T> first = peek();
@@ -59,6 +68,11 @@ public class Stack<T> implements StackInterface<T>{
     }
 
 
+    /**
+     * name:isEmpty
+      Returns whether the queue is empty or not.
+     @return true if the queue is empty, false otherwise.
+     */
     public boolean isEmpty() {
 
 

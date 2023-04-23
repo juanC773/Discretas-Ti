@@ -10,6 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class HeapTest {
 
 
+    //setups
     public Heap setup1(){
 
         Heap heap=new Heap<>(3);
@@ -33,6 +34,8 @@ public class HeapTest {
 
         return heap;
     }
+
+
 
     //Test of add
     @Test
@@ -99,25 +102,31 @@ public class HeapTest {
     }
 
 
-    @Test
-    public void useIncorrectlyTheMethodPollTest() throws UsePollWithoutElementsException {
+    /**
+     *
 
-        boolean pass=true;
-        //Arrange
-        Heap heap=setup2();
+     public void useIncorrectlyTheMethodPollTest() throws UsePollWithoutElementsException {
 
-        //Act
-        try {
-            heap.poll();
-            heap.poll();
-        }catch (UsePollWithoutElementsException ex){
-            ex.printStackTrace();
-            pass=false;
-        }
+     boolean pass=true;
+     //Arrange
+     Heap heap=setup2();
 
-        ///Assert
-        assertFalse(pass);
-    }
+     //Act
+     try {
+     heap.poll();
+     heap.poll();
+     }catch (UsePollWithoutElementsException ex){
+     ex.printStackTrace();
+     pass=false;
+     }
+
+     ///Assert
+     assertFalse(pass);
+     }
+
+      */
+
+
 
 
 

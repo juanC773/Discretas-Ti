@@ -63,6 +63,12 @@ public class Seat implements Comparable<Seat>{
         this.priorityToGetOut = priorityToGetOut;
     }
 
+    /**
+     * name: compareTo
+     * Compare from priority to exit
+     * @param o the object to be compared.
+     * @return returns the criteria
+     */
     @Override
     public int compareTo(Seat o) {
 

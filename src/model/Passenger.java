@@ -107,6 +107,12 @@ public class Passenger implements  Comparable<Passenger>{
         this.miles = miles;
     }
 
+    /**
+     * name: compareTo
+     * Compare by priority.
+     * @param o the object to be compared.
+     * @return returns the criteria to compare
+     */
     @Override
     public int compareTo(Passenger o) {
 

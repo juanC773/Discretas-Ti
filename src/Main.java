@@ -55,8 +55,6 @@ public class Main {
 
                 case 3:
 
-
-
                     System.out.println("-----");
                     controller.arrivalOfpassengers();
                     objPassengerList.save();
@@ -108,10 +106,6 @@ public class Main {
                 case 7:
                     System.exit(0);
                     break;
-
-
-
-
             }
         }
 

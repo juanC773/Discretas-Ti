@@ -69,6 +69,8 @@ public class PassengerList {
         }
     }
 
+
+    //  Shows the passengers that are expected (Those who bought their ticket)
     public void show() {
         for (Passenger s : passengers) {
             System.out.println("Passenger name: "+s.getName()+", Last name: "+s.getLastName()+", ID: "+s.getNatID()+", Category Passenger: "+s.getPassengerCategory()+ ", Special case: "+s.getSpecialCase()+", Number of seat: "+s.getSeat().getNumberOfSeat()+"\n-----------------");

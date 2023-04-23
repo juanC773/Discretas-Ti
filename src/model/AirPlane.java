@@ -12,23 +12,26 @@ import dataStuctures.Stack;
 public class AirPlane {
 
 
-
+    //Seats of the airplane
     private ArrayList<Seat> seats;
 
 
-
+    /**
+     * name: entranceOfPeopleToThePlane
+     * people enter the plane
+     * @param heap contains the first class people
+     * @param queue contains people in order of arrival
+     */
     public void entranceOfPeopleToThePlane(Heap heap, Queue queue){
-
-
-        System.out.println(queue.size());
 
 
 
         boolean confirm=true;
 
+        //Ingreso por prioridad.
         while (heap.size() > 0 & confirm ) {
 
-            //Ingreso por prioridad.
+
             Passenger passenger = (Passenger) heap.poll();
 
              if (passenger!=null) {
@@ -59,9 +62,10 @@ public class AirPlane {
     }
 
 
-
-
-
+    /**
+     * name: departureOfPassengersFromThePlane
+     * Take the passengers off the plane.
+     */
     public void departureOfPassengersFromThePlane(){
 
         int counter=0;
@@ -72,7 +76,7 @@ public class AirPlane {
         //Calcula la prioridad de salida
         calculatePriorityToGetOut();
 
-
+        //Acomoda a las sillas segun su prioridad
         Collections.sort(seats);
 
         //Agrega a la pila de salida:
@@ -88,7 +92,7 @@ public class AirPlane {
 
             System.out.println("The passenger of the seat: "+passenger.getKey()+" has left the plane.");
             counter++;
-
+            //counter=6 significa que ha terminado de recorrer una fila y counterRow<9 para que no se imprima un # de fila inexistente
             if(counter==6 & counterRow<9){
                 System.out.println("\nNow the passengers of row #"+counterRow+ " leave the plane:\n");
                 counterRow++;
@@ -100,6 +104,10 @@ public class AirPlane {
 
     }
 
+    /**
+     *name: calculatePriorityToGetOut
+     *calculates the priority for the exit, taking into account the type of chair and the row.
+     */
     public void calculatePriorityToGetOut(){
 
         //A los de las ventanas no se les suma puntos de prioridad para salir
@@ -107,10 +115,10 @@ public class AirPlane {
         for (int i = seats.size()-1; i >= 0 ; i--){
 
             //Prioridad para el tipo de silla
-            if(seats.get(i).getTypeOfseat()==2){
+            if(seats.get(i).getTypeOfseat()==2){ //2= mitad
                 seats.get(i).setPriorityToGetOut(seats.get(i).getPriorityToGetOut()+25);
 
-            } else if (seats.get(i).getTypeOfseat()==3) {
+            } else if (seats.get(i).getTypeOfseat()==3) {//3=pasillo
 
                 seats.get(i).setPriorityToGetOut(seats.get(i).getPriorityToGetOut()+50);
             }
@@ -145,6 +153,9 @@ public class AirPlane {
     }
 
 
+    /**
+     * Constructor
+     */
     public AirPlane() {
         seats = new ArrayList<>();
 
@@ -190,6 +201,7 @@ public class AirPlane {
 
 
 
+    //Getter and setters
 
     public ArrayList<Seat> getSeats() {
         return seats;

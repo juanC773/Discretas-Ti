@@ -1,4 +1,6 @@
 package model.enums;
+
+//Special case in a passenger
 public enum SpecialCase {
 
 
