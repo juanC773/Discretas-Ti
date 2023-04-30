@@ -1,9 +1,11 @@
 package model;
 import dataStuctures.Heap;
+import dataStuctures.HashTable;
 import dataStuctures.Queue;
 import model.enums.PassengerCategory;
 import model.enums.SpecialCase;
 
+import java.util.Collections;
 import java.util.Random;
 import java.io.IOException;
 
@@ -11,6 +13,11 @@ public class AirLineController {
 
 
     private PassengerList passengerList;
+    private HashTable hashTableID;
+
+
+
+
 
 
     /**
@@ -18,8 +25,18 @@ public class AirLineController {
      */
     public AirLineController() {
         passengerList = new PassengerList();
+
+
         try {
             passengerList.load();
+
+            hashTableID=new HashTable(11);
+
+            for (int i = 0; i < passengerList.getPassengerList().size(); i++) {
+
+                hashTableID.insert(passengerList.getPassengerList().get(i).getNatID(),passengerList.getPassengerList().get(i));
+            }
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -111,9 +128,13 @@ public class AirLineController {
 
             //Imprime los datos del pasajero que llega
 
-            System.out.println("the passenger will give his identification:");
-            System.out.println("Hi, mi name is: " + passenger.getName() + " " + passenger.getLastName() + ", my id is: " + passenger.getNatID());
 
+            System.out.print("Hi, my id is: " + passenger.getNatID());
+
+            Passenger passengerDataBase= (Passenger) hashTableID.get(passenger.getNatID());
+            if (passengerDataBase!=null) {
+                informationToArrivalPassenger(passengerDataBase);
+            }
             //Esto indica que solo se les dara un poco mas de prioridad a  los 10 primeros pasajeros en llegar
             if(counterArrival<=10){
                 System.out.println("\n(The passenger has received more priority for arriving early)");
@@ -124,6 +145,31 @@ public class AirLineController {
             }
         }
 
+
+        public void informationToArrivalPassenger(Passenger passenger){
+
+        String seat="";
+            if (passenger.getSeat().getTypeOfseat()==1){
+                seat+="Window";
+            }
+            else if (passenger.getSeat().getTypeOfseat()==2){
+                seat+="Middle";
+            }
+            else {
+                seat+="Aisle";
+            }
+
+
+
+            System.out.println(
+                    """
+                   \n-------------------------------------------------------------------                
+                   According to the database:  the passenger has bought the ticket ✔
+                            """
+            );
+            System.out.println("INFORMATION:\nName: "+passenger.getName()+"\nLast Name: "+passenger.getLastName()+"\nAge: "+passenger.getAge()+"\nCategory: "+passenger.getPassengerCategory()+"\nMiles: "+passenger.getMiles()+"\nNumber of seat: "+passenger.getSeat().getNumberOfSeat()+"\nType of seat: "+seat+"\nSpecial case: "+passenger.getSpecialCase()+"\n------------------------------------------------------------------- ");
+
+        }
 
     /**
      * name:showEntry
